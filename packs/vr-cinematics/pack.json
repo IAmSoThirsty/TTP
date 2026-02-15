@@ -1,0 +1,27 @@
+{
+  "name": "VR Cinematics",
+  "version": "1.0.0",
+  "description": "High-quality PBR textures optimized for VR cinematic experiences",
+  "author": "IAmSoThirsty",
+  "license": "MIT",
+  "tags": ["vr", "cinematic", "pbr", "high-res", "immersive"],
+  "target_projects": ["vr-experiences", "cinematic-vr", "immersive-storytelling"],
+  "resolution": "4096x4096",
+  "format": "png, exr",
+  "pbr_workflow": "metallic-roughness",
+  "style": "photorealistic",
+  "contents": {
+    "environments": ["studio", "outdoor", "interior", "abstract"],
+    "surfaces": ["concrete", "metal", "fabric", "wood", "glass"],
+    "effects": ["particles", "overlays", "light-leaks"],
+    "materials": {
+      "albedo": "Base color maps",
+      "normal": "Normal/bump maps",
+      "roughness": "Surface roughness",
+      "metallic": "Metallic properties",
+      "ao": "Ambient occlusion"
+    }
+  },
+  "performance_notes": "Optimized for VR with compressed formats. Includes LOD variants.",
+  "usage_notes": "Use with PBR-compatible rendering engines. Trilinear filtering recommended."
+}

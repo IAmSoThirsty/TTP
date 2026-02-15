@@ -1,0 +1,21 @@
+{
+  "name": "Miniature Office Pixel",
+  "version": "1.0.0",
+  "description": "Pixel-art texture pack for miniature office environments",
+  "author": "IAmSoThirsty",
+  "license": "MIT",
+  "tags": ["pixel-art", "office", "miniature", "2d", "isometric"],
+  "target_projects": ["office-simulator", "pixel-office", "indie-games"],
+  "resolution": "16x16 to 64x64",
+  "format": "png",
+  "color_palette": "limited",
+  "style": "retro-pixel",
+  "contents": {
+    "furniture": ["desk", "chair", "cabinet", "bookshelf"],
+    "equipment": ["computer", "phone", "printer", "lamp"],
+    "decorations": ["plant", "picture-frame", "calendar", "mug"],
+    "floors": ["carpet", "tile", "wood"],
+    "walls": ["plain", "wallpaper", "brick"]
+  },
+  "usage_notes": "Designed for pixel-perfect rendering. Disable texture filtering for best results."
+}

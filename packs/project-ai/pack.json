@@ -1,0 +1,25 @@
+{
+  "name": "Project AI",
+  "version": "1.0.0",
+  "description": "Futuristic and tech-themed textures for AI-driven projects",
+  "author": "IAmSoThirsty",
+  "license": "MIT",
+  "tags": ["ai", "tech", "futuristic", "ui", "sci-fi"],
+  "target_projects": ["ai-interfaces", "tech-demos", "futuristic-apps"],
+  "resolution": "variable (512x512 to 2048x2048)",
+  "format": "png, svg",
+  "style": "modern-tech",
+  "contents": {
+    "ui_elements": ["buttons", "panels", "borders", "icons"],
+    "backgrounds": ["circuit-patterns", "grid-overlays", "glitch-effects"],
+    "effects": ["holograms", "scanlines", "particles", "glow"],
+    "data_viz": ["graphs", "charts", "network-diagrams"],
+    "themes": ["dark-mode", "light-mode", "neon", "minimal"]
+  },
+  "color_schemes": {
+    "primary": ["#00ffff", "#0080ff", "#ff00ff"],
+    "accent": ["#00ff00", "#ffff00", "#ff0080"],
+    "neutral": ["#1a1a1a", "#2a2a2a", "#3a3a3a"]
+  },
+  "usage_notes": "Includes both raster and vector formats. SVG recommended for UI scaling."
+}
