@@ -30,7 +30,7 @@ k8s/
 ├── base/              # Base manifests for all environments
 │   ├── namespace.yaml
 │   ├── configmap.yaml
-│   ├── secrets.yaml
+│   ├── secrets.yaml.example  # Template (DO NOT commit actual secrets!)
 │   ├── api/           # API deployment
 │   ├── web/           # Web frontend deployment
 │   └── ingress.yaml
@@ -49,11 +49,15 @@ k8s/
 # Create namespace
 kubectl apply -f base/namespace.yaml
 
-# Create secrets (update with actual values first)
-kubectl apply -f base/secrets.yaml
+# Create secrets (see Secrets Management section below)
+# DO NOT use secrets.yaml in production - use kubectl create secret instead
 
-# Deploy application
-kubectl apply -f base/
+# Deploy application (ConfigMaps and Deployments)
+kubectl apply -f base/configmap.yaml
+kubectl apply -f base/api/
+kubectl apply -f base/web/
+kubectl apply -f base/ingress.yaml
+kubectl apply -f base/networkpolicy.yaml
 
 # Check deployment status
 kubectl get pods -n ttp-prod
@@ -76,24 +80,60 @@ kubectl apply -k overlays/dev/
 
 ## Configuration
 
-### Secrets
+### Secrets Management
 
-Before deploying, update `base/secrets.yaml` with your actual values:
-- Database credentials
-- Redis connection string
-- S3 access keys
-- JWT secret key
+⚠️ **SECURITY WARNING**: Never commit actual secrets to version control!
 
-Create secrets from literals:
+The repository includes `secrets.yaml.example` as a template. Actual secrets should be created using one of these methods:
+
+#### Option 1: Create Secrets from Command Line (Recommended for Production)
 
 ```bash
+# Generate a secure secret key
+SECRET_KEY=$(openssl rand -hex 32)
+
+# Create the secret
 kubectl create secret generic ttp-secrets \
-  --from-literal=database-url=postgresql://user:pass@host:5432/ttp \
-  --from-literal=redis-url=redis://host:6379/0 \
-  --from-literal=secret-key=your-secret-key \
-  --from-literal=s3-access-key=your-access-key \
-  --from-literal=s3-secret-key=your-secret-key \
+  --from-literal=DATABASE_URL="postgresql://username:password@your-rds-endpoint.region.rds.amazonaws.com:5432/ttp" \
+  --from-literal=REDIS_URL="redis://your-elasticache-endpoint.region.cache.amazonaws.com:6379/0" \
+  --from-literal=SECRET_KEY="$SECRET_KEY" \
+  --from-literal=AWS_ACCESS_KEY_ID="your-access-key" \
+  --from-literal=AWS_SECRET_ACCESS_KEY="your-secret-key" \
+  --from-literal=OTEL_EXPORTER_OTLP_ENDPOINT="http://otel-collector:4317" \
   -n ttp-prod
+```
+
+#### Option 2: Use Secrets from File (Local Development Only)
+
+```bash
+# Copy the example template
+cp base/secrets.yaml.example base/secrets.yaml
+
+# Edit the file and replace all placeholder values
+# NOTE: base/secrets.yaml is in .gitignore and will NOT be committed
+vim base/secrets.yaml
+
+# Apply the secrets
+kubectl apply -f base/secrets.yaml
+```
+
+#### Option 3: Use External Secrets Management (Recommended for Production)
+
+For production environments, use external secret management:
+- **AWS Secrets Manager** with [External Secrets Operator](https://external-secrets.io/)
+- **HashiCorp Vault** for centralized secret management
+- **Sealed Secrets** for encrypted secrets in Git
+
+Example with AWS Secrets Manager:
+```bash
+# Store secrets in AWS Secrets Manager
+aws secretsmanager create-secret \
+  --name ttp-prod-database \
+  --secret-string '{"url":"postgresql://..."}' \
+  --region us-east-1
+
+# Use External Secrets Operator to sync to Kubernetes
+# See: https://external-secrets.io/
 ```
 
 ### ConfigMap

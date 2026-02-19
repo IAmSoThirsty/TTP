@@ -6,7 +6,8 @@ namespace: ttp-prod
 resources:
   - namespace.yaml
   - configmap.yaml
-  - secrets.yaml
+  # NOTE: secrets.yaml is not included - create secrets manually using kubectl
+  # See README.md for instructions on creating secrets securely
   - api/deployment.yaml
   - web/deployment.yaml
   - ingress.yaml

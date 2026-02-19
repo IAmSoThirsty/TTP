@@ -39,8 +39,8 @@ class Settings(BaseSettings):
 
     # Database
     DATABASE_URL: PostgresDsn = Field(
-        default="postgresql://ttp:password@localhost:5432/ttp",
-        description="PostgreSQL connection string"
+        default="postgresql://ttp:CHANGEME_PASSWORD@localhost:5432/ttp",
+        description="PostgreSQL connection string - MUST be set via environment variable"
     )
     DATABASE_POOL_SIZE: int = 20
     DATABASE_MAX_OVERFLOW: int = 10
@@ -56,8 +56,8 @@ class Settings(BaseSettings):
 
     # Authentication
     SECRET_KEY: str = Field(
-        default="change-me-in-production-use-openssl-rand-hex-32",
-        description="Secret key for JWT signing"
+        default="INSECURE_DEFAULT_CHANGE_ME_IN_PRODUCTION",
+        description="Secret key for JWT signing - Generate with: openssl rand -hex 32"
     )
     ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60
