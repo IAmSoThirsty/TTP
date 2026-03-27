@@ -40,6 +40,6 @@
     "@vitest/ui": "^1.2.0",
     "@testing-library/react": "^14.1.2",
     "@testing-library/jest-dom": "^6.2.0",
-    "happy-dom": "^13.0.0"
+    "happy-dom": "^20.6.3"
   }
 }
